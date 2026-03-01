@@ -8,7 +8,7 @@ app = FastAPI()
 @app.get("/")
 def root():
     return {
-        # "message": "Hello World",
+        "message": "Hello World",
         "docs": "/docs"
     }
 
