@@ -13,3 +13,8 @@ logger.info(f"Loading environment variables...")
 # FASTAPI_ENVIRONMENT = env.str("FASTAPI_ENVIRONMENT", default="PRODUCTION")
 IP = env.str("IP", default="0.0.0.0")
 PORT = env.int("PORT", default=8000)
+
+
+for key, value in list(globals().items()):
+    if key.isupper():
+        logger.info(f"{key}: {value}")
