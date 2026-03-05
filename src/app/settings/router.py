@@ -10,7 +10,7 @@ from .service import get_user_settings, upsert_user_settings
 router = APIRouter(prefix="/settings", tags=["User Settings"])
 
 
-@router.get("/", response_model=BaseResponse[List[SettingItem]])
+@router.get("", response_model=BaseResponse[List[SettingItem]])
 def get_settings(
     user_id: str = Depends(get_current_user_id),
     db: Session = Depends(get_db)
@@ -23,7 +23,7 @@ def get_settings(
     )
 
 
-@router.post("/", response_model=BaseResponse)
+@router.post("", response_model=BaseResponse)
 def upsert_settings(
     request: UpsertSettingsRequest,
     user_id: str = Depends(get_current_user_id),

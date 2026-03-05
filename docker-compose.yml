@@ -1,23 +1,8 @@
 services:
   be-ai:
-    container_name: be-ai
+    extends:
+      file: docker-compose.base.yml
+      service: be-ai
     build:
       context: "."
-      dockerfile: "./Dockerfile.dev"
-    # command: tail -f /dev/null
-    restart: "always"
-    ports:
-      - "8000:8000"
-    volumes:
-      - "./pyproject.toml:/app/pyproject.toml"
-      - "./uv.lock:/app/uv.lock"
-      - "./src:/app/src"
-    #   - .:/app
-    #   - /app/.venv
-    environment:
-      - PORT=8000
-      - DATABASE_URL=${DATABASE_URL}
-      - SUPABASE_PROJECT_ID=${SUPABASE_PROJECT_ID}
-    dns:
-      - 8.8.8.8
-      - 8.8.4.4
+      dockerfile: "./Dockerfile"
