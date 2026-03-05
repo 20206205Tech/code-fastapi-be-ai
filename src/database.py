@@ -5,7 +5,8 @@ import settings
 
 engine = create_engine(
     settings.DATABASE_URL,
-    # echo=True
+    pool_pre_ping=True,  # Thêm dòng này để kiểm tra connection trước khi dùng
+    echo=True
 )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

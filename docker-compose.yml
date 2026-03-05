@@ -1,20 +1,8 @@
 services:
   be-ai:
-    container_name: be-ai
+    extends:
+      file: docker-compose.base.yml
+      service: be-ai
     build:
       context: "."
-      dockerfile: "./Dockerfile.dev"
-    # command: tail -f /dev/null
-    restart: "always"
-    ports:
-      - "8000:8000"
-    volumes:
-      - "./src:/app/src"
-    #   - .:/app
-    #   - /app/.venv
-    environment:
-      - PORT=8000
-      - DATABASE_URL=${DATABASE_URL}
-    dns:
-      - 8.8.8.8
-      - 8.8.4.4
+      dockerfile: "./Dockerfile"

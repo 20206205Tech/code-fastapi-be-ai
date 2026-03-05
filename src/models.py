@@ -1,11 +1,8 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
-
-# src/models.py
 from typing import Optional
 import datetime
-
-from sqlalchemy import String, Integer, Float, DateTime, JSON
+from sqlalchemy import String, Integer, Float, DateTime, JSON, PrimaryKeyConstraint, Index, text, Identity, Text
 from sqlalchemy.sql import func
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
@@ -42,3 +39,21 @@ class RequestLog(Base):
 #     name: str = Column(String(50), index=True)
 #     email: str = Column(String(50), unique=True, index=True)
 #     password: str = Column(String(50))
+
+
+class UserSettings(Base):
+    __tablename__ = 'user_settings'
+    __table_args__ = (
+        PrimaryKeyConstraint('id', name='user_settings_pkey'),
+        Index('unique_user_key', 'user_id', 'key', unique=True)
+    )
+
+    id: Mapped[int] = mapped_column(Integer, Identity(
+        start=1, increment=1, minvalue=1, maxvalue=2147483647, cycle=False, cache=1), primary_key=True)
+
+    user_id: Mapped[str] = mapped_column(String(36), nullable=False)
+
+    key: Mapped[str] = mapped_column(String, nullable=False)
+    value: Mapped[str] = mapped_column(Text, nullable=False)
+    updated_at: Mapped[Optional[datetime.datetime]] = mapped_column(
+        DateTime, server_default=text('now()'))

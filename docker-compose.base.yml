@@ -1,0 +1,12 @@
+services:
+  be-ai:
+    container_name: be-ai
+    ports:
+      - "8000:8000"
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    environment:
+      - PORT=8000
+      - DATABASE_URL=${DATABASE_URL}
+      - SUPABASE_PROJECT_ID=${SUPABASE_PROJECT_ID}

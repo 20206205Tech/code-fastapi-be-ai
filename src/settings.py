@@ -16,12 +16,22 @@ PORT = env.int("PORT")
 DATABASE_URL = env.str("DATABASE_URL")
 
 
+SUPABASE_PROJECT_ID = env.str("SUPABASE_PROJECT_ID")
+SUPABASE_URL = f"https://{SUPABASE_PROJECT_ID}.supabase.co"
+JWKS_URL = f"{SUPABASE_URL}/auth/v1/.well-known/jwks.json"
+ISSUER = f"{SUPABASE_URL}/auth/v1"
+AUDIENCE = "authenticated"
+
+print("*" * 100)
 for key, value in list(globals().items()):
     if key.isupper():
         # logger.info(f"{key}: {value}")
         logger.info(f"{key}: ***")
+print("*" * 100)
 
 
 print("=" * 100)
-print(f"http://localhost:{PORT}/docs")
+print(f"Application is running on: http://localhost:{PORT}/docs")
+print(
+    f"https://{SUPABASE_PROJECT_ID}.supabase.co/auth/v1/authorize?provider=google")
 print("=" * 100)

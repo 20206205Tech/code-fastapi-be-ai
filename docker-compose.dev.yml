@@ -1,0 +1,13 @@
+services:
+  be-ai:
+    extends:
+      file: docker-compose.base.yml
+      service: be-ai
+    build:
+      context: "."
+      dockerfile: "./Dockerfile.dev"
+    restart: "always"
+    volumes:
+      - "./pyproject.toml:/app/pyproject.toml"
+      - "./uv.lock:/app/uv.lock"
+      - "./src:/app/src"

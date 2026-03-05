@@ -1,10 +1,10 @@
 from fastapi import APIRouter
 
 
-# from app.user.router import router as user_router
+from app.settings.router import router as settings_router
 
 
 index_router = APIRouter()
 
 
-# index_router.include_router(user_router)
+index_router.include_router(settings_router)
