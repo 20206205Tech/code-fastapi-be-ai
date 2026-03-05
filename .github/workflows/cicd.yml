@@ -96,6 +96,8 @@ jobs:
           tags: registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/web
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          platforms: linux/amd64
+          provenance: false
 
       - name: Release the app on Heroku
         env:
