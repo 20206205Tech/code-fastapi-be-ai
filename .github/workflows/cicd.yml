@@ -46,13 +46,8 @@ jobs:
 
   # --- 3. JOB DEPLOY (Chạy khi Alembic thành công hoặc bị bỏ qua do không có thay đổi) ---
   deploy-heroku:
-    needs: [check_changes, alembic]
-    if: |
-      always() &&
-      !cancelled() &&
-      needs.check_changes.result == 'success' &&
-      (needs.alembic.result == 'success' || needs.alembic.result == 'skipped') &&
-      github.ref == 'refs/heads/main'
+    needs: [alembic]
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
