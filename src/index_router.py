@@ -1,10 +1,11 @@
 from fastapi import APIRouter
 
-
 from app.settings.router import router as settings_router
-
+from app.token_packages.router import router as token_packages_router
+from app.payment.router import router as payment_router
 
 index_router = APIRouter()
 
-
 index_router.include_router(settings_router)
+index_router.include_router(token_packages_router)
+index_router.include_router(payment_router)
