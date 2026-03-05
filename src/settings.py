@@ -22,6 +22,14 @@ JWKS_URL = f"{SUPABASE_URL}/auth/v1/.well-known/jwks.json"
 ISSUER = f"{SUPABASE_URL}/auth/v1"
 AUDIENCE = "authenticated"
 
+
+VNPAY_TMN_CODE = env.str("VNPAY_TMN_CODE")
+VNPAY_HASH_SECRET_KEY = env.str("VNPAY_HASH_SECRET_KEY")
+VNPAY_RETURN_URL = env.str("VNPAY_RETURN_URL")
+VNPAY_PAYMENT_URL = env.str("VNPAY_PAYMENT_URL")
+VNPAY_API_URL = env.str("VNPAY_API_URL")
+
+
 print("*" * 100)
 for key, value in list(globals().items()):
     if key.isupper():
