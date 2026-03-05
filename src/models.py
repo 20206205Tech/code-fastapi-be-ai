@@ -137,3 +137,20 @@ class Transactions(Base):
 
     package: Mapped['TokenPackages'] = relationship(
         'TokenPackages', back_populates='transactions')
+
+
+class Persona(Base):
+    __tablename__ = 'personas'
+
+    id: Mapped[int] = mapped_column(
+        Integer, Identity(start=1), primary_key=True)
+    name: Mapped[str] = mapped_column(String(100), nullable=False)
+    description: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    avatar_url: Mapped[Optional[str]] = mapped_column(
+        String(255), nullable=True)
+    system_prompt: Mapped[str] = mapped_column(
+        Text, nullable=False)  # Lệnh điều khiển AI
+    is_active: Mapped[bool] = mapped_column(
+        Boolean, server_default=text('true'))
+    created_at: Mapped[datetime.datetime] = mapped_column(
+        DateTime, server_default=func.now())
