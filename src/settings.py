@@ -16,7 +16,13 @@ PORT = env.int("PORT")
 DATABASE_URL = env.str("DATABASE_URL")
 
 
+PERSONA_AVATARS_BUCKET = "persona_avatars"
+ALLOWED_IMAGE_EXTENSIONS = ["jpg", "jpeg", "png", "webp"]
+
+
 SUPABASE_PROJECT_ID = env.str("SUPABASE_PROJECT_ID")
+SUPABASE_SERVICE_ROLE_KEY = env.str("SUPABASE_SERVICE_ROLE_KEY")
+
 SUPABASE_URL = f"https://{SUPABASE_PROJECT_ID}.supabase.co"
 JWKS_URL = f"{SUPABASE_URL}/auth/v1/.well-known/jwks.json"
 ISSUER = f"{SUPABASE_URL}/auth/v1"

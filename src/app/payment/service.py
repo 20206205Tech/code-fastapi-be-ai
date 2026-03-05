@@ -5,7 +5,7 @@ import uuid
 import datetime
 import settings
 from models import TokenPackages, Transactions, Tokens
-from .vnpay_core import Vnpay  # Đặt file class Vnpay vào cùng thư mục
+from app.common.vnpay_core import Vnpay
 
 vnpay = Vnpay(
     tmn_code=settings.VNPAY_TMN_CODE,
