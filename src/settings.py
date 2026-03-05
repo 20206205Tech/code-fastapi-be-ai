@@ -1,5 +1,5 @@
-from loguru import logger
 from environs import Env
+from loguru import logger
 
 
 # log_file_format = "{time:YYYY-MM-DD}.log"
@@ -11,10 +11,17 @@ logger.info(f"Loading environment variables...")
 
 
 # FASTAPI_ENVIRONMENT = env.str("FASTAPI_ENVIRONMENT", default="PRODUCTION")
-IP = env.str("IP", default="0.0.0.0")
-PORT = env.int("PORT", default=8000)
+
+PORT = env.int("PORT")
+DATABASE_URL = env.str("DATABASE_URL")
 
 
 for key, value in list(globals().items()):
     if key.isupper():
-        logger.info(f"{key}: {value}")
+        # logger.info(f"{key}: {value}")
+        logger.info(f"{key}: ***")
+
+
+print("=" * 100)
+print(f"http://localhost:{PORT}/docs")
+print("=" * 100)
