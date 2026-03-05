@@ -1,34 +1,38 @@
-FROM python:3.12-slim AS builder
+# # Bước 1: Build stage
+# FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim AS builder
 
-ENV POETRY_VERSION=2.2.1 \
-    POETRY_HOME="/opt/poetry" \
-    POETRY_NO_INTERACTION=1 \
-    POETRY_VIRTUALENVS_IN_PROJECT=1 \
-    POETRY_VIRTUALENVS_CREATE=1 \
-    POETRY_CACHE_DIR=/tmp/poetry_cache
+# # Thiết lập môi trường để uv không tạo file .pyc và tối ưu cache
+# ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy
 
-RUN pip install --no-cache-dir poetry==${POETRY_VERSION}
+# WORKDIR /app
 
-WORKDIR /app
+# # Copy file cấu hình trước để tận dụng Docker cache
+# RUN --mount=type=cache,target=/root/.cache/uv \
+#     --mount=type=bind,source=uv.lock,target=uv.lock \
+#     --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+#     uv sync --frozen --no-install-project --no-dev
 
-COPY pyproject.toml ./
-COPY poetry.lock* ./
+# # Copy mã nguồn vào
+# ADD . /app
 
-RUN poetry install --no-root   && rm -rf $POETRY_CACHE_DIR
+# # Sync lại để bao gồm cả project hiện tại
+# RUN --mount=type=cache,target=/root/.cache/uv \
+#     uv sync --frozen --no-dev
 
-FROM python:3.12-slim AS runtime
 
-ENV PYTHONUNBUFFERED=1 \
-    PYTHONDONTWRITEBYTECODE=1 \
-    PATH="/app/.venv/bin:$PATH"
+# # Bước 2: Runtime stage
+# FROM python:3.12-slim-bookworm
 
-WORKDIR /app
+# WORKDIR /app
 
-COPY --from=builder /app/.venv /app/.venv
+# # Copy môi trường ảo (.venv) từ builder sang
+# COPY --from=builder /app/.venv /app/.venv
 
-COPY . .
+# # Copy mã nguồn
+# COPY . /app
 
-RUN useradd -m -u 1000 appuser && chown -R appuser:appuser /app
-USER appuser
+# # Thêm .venv/bin vào PATH để chạy app không cần source
+# ENV PATH="/app/.venv/bin:$PATH"
 
-CMD ["python", "src/main.py"]
+# # Chạy ứng dụng (Ví dụ với FastAPI/Uvicorn)
+# CMD ["python", "app.py"]

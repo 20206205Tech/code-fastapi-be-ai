@@ -1,0 +1,37 @@
+name: Database Migrations
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  alembic:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Install Doppler CLI
+        uses: dopplerhq/cli-action@v1
+
+      - name: Run Docker Compose
+        run: doppler run -p 20206205tech -c prd -- docker compose -f docker-compose.yml up -d
+        env:
+          DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
+
+      - name: Check running containers
+        run: docker ps
+
+      - name: Preview Changes
+        run: docker exec be-ai sh -c "cd /app/src && alembic upgrade head --sql"
+
+      - name: Apply Changes
+        if: github.ref == 'refs/heads/main'
+        run: docker exec be-ai sh -c "cd /app/src && alembic upgrade head"
