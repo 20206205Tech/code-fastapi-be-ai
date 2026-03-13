@@ -13,6 +13,8 @@ logger.info(f"Loading environment variables...")
 # FASTAPI_ENVIRONMENT = env.str("FASTAPI_ENVIRONMENT", default="PRODUCTION")
 
 PORT = env.int("PORT")
+
+
 DATABASE_URL = env.str("DATABASE_URL")
 
 
@@ -36,12 +38,11 @@ VNPAY_PAYMENT_URL = env.str("VNPAY_PAYMENT_URL")
 VNPAY_API_URL = env.str("VNPAY_API_URL")
 
 
-print("*" * 100)
-for key, value in list(globals().items()):
-    if key.isupper():
-        # logger.info(f"{key}: {value}")
-        logger.info(f"{key}: ***")
-print("*" * 100)
+# print("*" * 100)
+# for key, value in list(globals().items()):
+#     if key.isupper():
+#         logger.info(f"{key}: ***")
+# print("*" * 100)
 
 
 print("=" * 100)

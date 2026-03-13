@@ -5,11 +5,10 @@ from decimal import Decimal
 
 
 class TokenPackageBase(BaseModel):
-    name: str = Field(..., description="Tên gói token")
-    token: int = Field(..., description="Số lượng token")
-    price: Decimal = Field(..., description="Giá tiền")
-    is_active: Optional[bool] = Field(
-        default=True, description="Trạng thái hiển thị gói")
+    name: str = Field(...)
+    token: int = Field(..., gt=0)
+    price: Decimal = Field(...,  gt=0)
+    is_active: Optional[bool] = Field(default=True)
 
 
 class TokenPackageCreate(TokenPackageBase):
@@ -18,8 +17,8 @@ class TokenPackageCreate(TokenPackageBase):
 
 class TokenPackageUpdate(BaseModel):
     name: Optional[str] = None
-    token: Optional[int] = None
-    price: Optional[Decimal] = None
+    token: Optional[int] = Field(None, gt=0)
+    price: Optional[Decimal] = Field(None, gt=0)
     is_active: Optional[bool] = None
 
 

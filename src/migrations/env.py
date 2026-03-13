@@ -30,22 +30,13 @@ target_metadata = Base.metadata
 # ... etc.
 
 
-def print_version(ctx, step, heads, run_args):
-    action = "Upgrade" if step.is_upgrade else "Downgrade"
-    print(f"{'*' * 100}")
-    print(f"[*] Done [{action}] version: {step.up_revision_id}")
-    print(f"{'*' * 100}")
-
-
 def run_migrations_offline() -> None:
     url = config.get_main_option("sqlalchemy.url")
-
     context.configure(
         url=url,
         target_metadata=target_metadata,
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
-        on_version_apply=print_version,
     )
 
     with context.begin_transaction():
